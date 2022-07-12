@@ -16,6 +16,8 @@ pub struct MdzkConfig {
     pub description: Option<String>,
     /// The source directory of the vault, relative to the location of the config file.
     pub src: PathBuf,
+    /// A list of file paths to include. Anything not listed here won't be included.
+    pub include: Option<Vec<String>>,
     /// A list of patterns to ignore notes. Based on gitignore syntax.
     pub ignore: Option<Vec<String>>,
     /// Whether the vault is multilingual or not.
@@ -36,6 +38,7 @@ impl Default for MdzkConfig {
             description: None,
             src: PathBuf::from(SRC_DIR),
             ignore: None,
+            include: None,
             multilingual: false,
             language: Some("en".to_string()),
             backlinks_header: None,

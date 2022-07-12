@@ -85,7 +85,7 @@ pub fn update_summary(config: &Config, root: &Path) -> Result<(), Error> {
         .filter_map(|e| e.ok())
         // Don't include the book source directory
         .filter(|e| e.path() != book_source && e.path() != book_source.join(SUMMARY_FILE))
-        // Filter files which share the name of it's parent directory.
+        // Filter files which share the name of its parent directory.
         .filter(|e| {
             if let Some(dir_stem) = e.path().parent() {
                 let dir_stem = dir_stem.file_stem().unwrap_or_default();
@@ -94,6 +94,11 @@ pub fn update_summary(config: &Config, root: &Path) -> Result<(), Error> {
             } else {
                 true
             }
+        })
+        // Filter files not explicitly included.
+        .filter(|e|  {
+          //print!("filename: {}\n", e.path().file_stem().unwrap().to_str().unwrap());
+          config.mdzk.include.iter().flatten().position(|s| e.path().file_stem().unwrap().to_str().unwrap() == s) != None
         })
         .map(|e| {
             let path = e.path();

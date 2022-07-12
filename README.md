@@ -10,3 +10,24 @@ mdzk is a plain text Zettelkasten system that is based on the mdBook API. It con
 
 <!-- Keeping this for future reference -->
 <!-- These characters are disallowed in note filenames: `=`, <code>\`</code>, `^`, `#`, `|`, `:`, `/`, `[` and `]`. -->
+
+## Include-only builds
+
+This fork has been hacked up (by someone who doesn't know Rust, no less) to only include files in the build that are explicitly listed in `mdzk.toml`.
+
+So, if you have an `mdzk.toml` like this:
+
+    [mdzk]
+    authors = ["Jim Kang"]
+    ignore = []
+    include = [
+      "Unrar",
+      "Tengen",
+      "web-layout"
+    ]
+    language = "en"
+    multilingual = false
+    src = "."
+    title = "Omniwiki"
+
+It will only make html files for `Unrar.md`, `Tengen.md`, and `web-layout.md`. It will automatically ignore all of the other files in the Markdown source root dir.
